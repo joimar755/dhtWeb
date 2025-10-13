@@ -12,7 +12,7 @@ let dht22;
 dht22 = new Chart(ctx, {
     type: 'bar',
     data: {
-        labels: ["temperatura","humedad"],
+        labels: ["temperatura", "humedad"],
         datasets: [{
             label: '# of Votes',
             data: [0, 0],
@@ -32,3 +32,13 @@ socket.on("sensorData", (data) => {
     dht22.data.datasets[0].data = [parseFloat(data.temperatura), parseFloat(data.humedad)];
     dht22.update();
 });
+socket.on("control", (data) => {
+    console.log("control led:", data);
+});
+function setLed(data) {
+    fetch("http://10.42.0.1:3000/leds", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ...data })
+    });
+}
