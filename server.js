@@ -5,6 +5,8 @@ import { Server as SocketIOServer } from 'socket.io';
 import TempRoutes from './routes/dht.routes.js'
 import AuthRoutes from './routes/auth.routes.js'
 import Leds_Routes from './routes/leds.routes.js'
+import pool from './db.js'
+
 
 
 const app = express();
@@ -24,6 +26,16 @@ app.use(express.static('public'));
 
 
 export const ledStatus = { led1: false, led2: false, led3: false };
+
+(async () => {
+    try {
+        const [rows] = await pool.query('SELECT 1');
+        console.log('✅ Conexión a la base de datos exitosa');
+    } catch (error) {
+        console.error('❌ Error al conectar a la base de datos:', error.message);
+    }
+})();
+
 
 io.on('connection', (socket) => {
     console.log("conexion", socket.id);
