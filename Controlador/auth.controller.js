@@ -1,6 +1,6 @@
 import bcrypt from "bcrypt";
 import pool from "../db.js";
-import { createAccessToken } from "../middleware/auth.js";
+import jwt from "jsonwebtoken"
 
 export const Register = async (req, res) => {
     const { username, password } = req.body;
@@ -53,11 +53,10 @@ export const Login = async (req, res) => {
     if (!resultado) {
         return res.status(400).json({ message: "El users y password invalido" });
     }
-    const token = await createAccessToken({ id: resultado.insertId }, process.env.JWT_SECRETO, {
-        expiresIn: "2h",
-    });
+    const token = jwt.sign({ id: resultado[0].id, username: resultado[0].username }, process.env.JWT_SECRETO, { expiresIn: '2h' });
+
     return res.json({
-        token:token,
+        token: token,
     });
 
 

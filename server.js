@@ -6,7 +6,8 @@ import TempRoutes from './routes/dht.routes.js'
 import AuthRoutes from './routes/auth.routes.js'
 import Leds_Routes from './routes/leds.routes.js'
 import pool from './db.js'
-
+import dotenv from 'dotenv';
+dotenv.config();
 
 
 const app = express();
