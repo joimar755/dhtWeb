@@ -17,6 +17,7 @@ app.use(express.json());
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 
+
 app.use(TempRoutes);
 app.use(AuthRoutes);
 app.use(Leds_Routes);

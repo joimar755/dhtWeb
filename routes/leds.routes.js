@@ -6,7 +6,7 @@ const router = Router();
 
 router.get("/leds",authenticateToken, get_leds);
 router.get("/leds/:id", (req, res) => res.send("obteniendo un leds"));
-router.post("/leds",authenticateToken, post_leds);
+router.post("/leds", post_leds);
 //router.delete("/temp/:id", (req, res) => res.send("obteniendo temperatura"));
 
 
