@@ -53,11 +53,16 @@ export const Status_Dht = async (req, res) => {
 export const DHT_AVG = async (req, res, io) => {
   try {
     const [resultado] = await pool.query(
-      "select AVG(s.temperatura) AS PROMEDIO_TEMPERATURA , s.fecha from sensordht22 s"
+      `SELECT 
+         AVG(s.temperatura) AS PROMEDIO_TEMPERATURA, 
+         AVG(s.humedad) AS PROMEDIO_HUMEDAD, 
+         s.fecha
+       FROM sensordht22 s`
     );
 
     const data = {
-      temperatura: resultado[0].PROMEDIO_TEMPERATURA
+      temperatura: resultado[0].PROMEDIO_TEMPERATURA,
+      humedad: resultado[0].PROMEDIO_HUMEDAD
     };
 
     // Emitimos por socket.io
@@ -70,7 +75,7 @@ export const DHT_AVG = async (req, res, io) => {
   }
 };
 
-export const DHT_AVG_HUMEDAD = async (req, res) => {
+/* export const DHT_AVG_HUMEDAD = async (req, res) => {
   try {
     const [resultado] = await pool.query(
       "select AVG(s.humedad) AS PROMEDIO_HUMEDAD , s.fecha from sensordht22 s"
@@ -88,4 +93,4 @@ export const DHT_AVG_HUMEDAD = async (req, res) => {
   } catch (error) {
     return res.status(500).json({ error: "Error interno" });
   }
-};
+}; */
