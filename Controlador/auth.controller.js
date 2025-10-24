@@ -39,7 +39,7 @@ export const Register = async (req, res) => {
 export const Login = async (req, res) => {
     const { username, password } = req.body;
     const [resultado] = await pool.query("SELECT * FROM login WHERE username = ?", [username]);
-
+    
     if (resultado.length === 0) {
         return res.status(400).json({
             message: "username no está registrado",
@@ -54,12 +54,10 @@ export const Login = async (req, res) => {
         return res.status(400).json({ message: "El users y password invalido" });
     }
     const token = jwt.sign({ id: resultado[0].id, username: resultado[0].username }, process.env.JWT_SECRETO, { expiresIn: '2h' });
-
+    
     return res.json({
         token: token,
     });
-
-
 
 };
 

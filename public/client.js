@@ -1,5 +1,5 @@
 // URL del servidor Socket.IO
-const socket = io("http://10.42.0.1:3000");
+const socket = io("http://192.168.1.6:3000");
 
 // Conexión establecida
 socket.on("connect", () => {
@@ -36,7 +36,7 @@ socket.on("control", (data) => {
     console.log("control led:", data);
 });
 function setLed(data) {
-    fetch("http://10.42.0.1:3000/leds", {
+    fetch("http://192.168.1.6:3000/leds", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ ...data })
