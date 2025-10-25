@@ -1,11 +1,13 @@
 import { ledStatus } from "../server.js";
-import pool from "../db.js"
+import pool from "../db.js";
+import { io } from "../server.js";
+
 
 export const get_leds = (req, res) => {
     res.json(ledStatus);
 }
 
-export const post_leds = async (req, res) => {
+export const post_leds = async (req, res, io) => {
     try {
         const { led1, led2, led3 } = req.body;
         if (led1 !== undefined) ledStatus.led1 = led1;
@@ -15,7 +17,7 @@ export const post_leds = async (req, res) => {
             [led1, led2, led3, req.userId]
         )
         console.log(req.userId);
-        //io.emit("control", ledStatus);
+        io.emit("control", ledStatus);
         console.log("Nuevo estado:", { ledStatus });
         return res.json({ success: true, status: ledStatus, userID: req.userId });
     } catch (error) {
